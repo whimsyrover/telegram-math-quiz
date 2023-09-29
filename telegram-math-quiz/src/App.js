@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import QuizQuestion from './Components/QuizQuestion.js';
+import QuizQuestion from './Components/QuizQuestion.jsx';
 
 
 
