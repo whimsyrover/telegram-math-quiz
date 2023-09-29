@@ -1,0 +1,20 @@
+{
+    "name": "squizme_bot",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "dotenv": "^8.6.0",
+        "telegraf": "^4.14"
+    },
+    "devDependencies": {
+        "webpack": "^4.41.6",
+        "webpack-cli": "^3.3.11",
+        "webpack-dev-server": "^4.15.1"
+    }
+}
