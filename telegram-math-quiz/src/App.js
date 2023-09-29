@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import QuizQuestion from './Components/QuizQuestion.js';
 
-// const tele = window.Telegram.WebApp;
+
 
 function App() {
   // const [cartItems, setCartItems] = useState([]);
-  // useEffect(() => {
-  //   tele.ready();
-  // });
+ 
+
+  const tele = window.Telegram.WebApp;
+
+  useEffect(() => {
+    tele.ready();
+  });
 
   return (
     <div class="bg-white py-24 sm:py-32 ">
