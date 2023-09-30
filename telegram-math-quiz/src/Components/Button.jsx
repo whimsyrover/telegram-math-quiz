@@ -1,9 +1,10 @@
 import React from 'react';
 
-function Button({ title, onClick }) {
+function Button({ title, isPrimary = false, onClick }) {
+    const style = "px-4 py-2 rounded-lg"
     return (
         <button
-            class="bg-sky-100 px-4 py-2 rounded-lg"
+            class={isPrimary ? style + " bg-sky-100" : style + " bg-sky-50"}
             onClick={onClick}
         >
             {title}

@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 class Question {
     constructor(question = "", options = [], correctAnswerIndex = null) {
         this.question = question;
@@ -15,15 +13,21 @@ class QuizForm {
     }
 }
 
-class QuizController extends React.Component {
+class QuizScore {
+
+}
+
+class QuizController {
     constructor() {
-        super()
         this.quizzes = [];
         this.setupQuizzes()
         
         this.currentQuizz = this.quizzes[this.setRandomQuiz()]
         this.currentQuestionIndex = 0
-        this.currentQuestion = this.currentQuizz.questions[0]
+    }
+
+    getCurrentQuestion() {
+        return this.currentQuizz.questions[this.currentQuestionIndex]
     }
 
     addQuiz(quiz) {
@@ -68,9 +72,11 @@ class QuizController extends React.Component {
         } else {
             this.currentQuestionIndex += 1
             this.currentQuestion = this.currentQuizz.questions[nextIndex]
-            console.log("[controller] Current index: ", this.currentQuestionIndex)
-            console.log("[controller] Update current question to: ", this.currentQuestion)
         }
+    }
+
+    onSkipQuestion() {
+
     }
 }
 

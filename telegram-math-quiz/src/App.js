@@ -3,77 +3,89 @@ import QuizQuestion from './Components/QuizQuestion.jsx';
 import Button from "./Components/Button.jsx";
 import QuizController from "./QuizController.js";
 
+const controller = new QuizController()
 
 function App() {
-  // const [cartItems, setCartItems] = useState([]);
   const tele = window.Telegram.WebApp;
 
-  var controller = new QuizController()
-  var quizzIndex = controller.currentQuestionIndex
+  // --- Quiz Controller ---
   const quizzLenght = controller.currentQuizz.length
-
+  const [quizIndex, setQuizIndex] = useState(1)
+  const [currentQuestion, setCurrentQuestion] = useState(controller.getCurrentQuestion())
   const [isNextAvailable, setIsNextAvailable] = useState(false)
-  // console.log("controller: ", controller)
-  // console.log("quizz lenght: ", quizzLenght)
-
+  
+  // --- Side Effects ---
   useEffect(() => {
     tele.ready();
   });
-  console.log("Current question: ", controller)
 
+  useEffect(() => {
+    setQuizIndex(controller.currentQuestionIndex + 1)
+  }, [currentQuestion]);
+
+  // --- Actions ---
   const onSelectAnswer = () => {
-    console.log(">>> on select answer")
     setIsNextAvailable(true)
   }
 
   const onClickNext = () => {
-    console.log(">>> on click next")
     controller.nextQuestion()
-    console.log("Next index: ", quizzIndex)
+    setCurrentQuestion(controller.getCurrentQuestion())
+    setIsNextAvailable(false)
   }
 
   const onClickSkip = () => {
     console.log(">>> on click skip")
   }
 
+  const onClickResults = () => {
+    console.log("✨results")
+  }
+
   const handleNextButton = () => {
     if (!isNextAvailable) {
       return null
+    } if (quizIndex === quizzLenght) {
+      return <Button 
+        title={"Results"}
+        isPrimary={true}
+        onClick={onClickResults}
+      />
     } else {
       return <Button 
         title={"Next"} 
-        disable={isNextAvailable}
+        isPrimary={true}
         onClick={onClickNext}
       />
     }
   }
-
+  
+  // --- Render UI ---
   return (
     <div class="bg-white py-10">
-      <div id="quiz-container" class="mx-auto px-6 space-y-16 justify-center items-center">
+      <div id="quiz-container" class="mx-auto px-6 space-y-8 justify-center items-center">
 
           <div class="flex flex-col">
             <h2 class="text-center text-lg font-semibold leading-8 text-gray-900">Let's play with</h2>
             <h2 class="text-center text-lg font-semibold leading-8 text-gray-900">✨ Math ✨</h2>
           </div>
 
-          <p>{quizzIndex}/{quizzLenght}</p>
-
+          <p>{quizIndex}/{quizzLenght}</p>
+          
           <QuizQuestion
-            question={controller.currentQuestion.question}
-            options={controller.currentQuestion.options}
-            correctAnswerIndex={controller.currentQuestion.correctAnswerIndex}
+            question={currentQuestion.question}
+            options={currentQuestion.options}
+            correctAnswerIndex={currentQuestion.correctAnswerIndex}
             onSelectAnswer={onSelectAnswer}
           />
 
           <div class="flex flex-row space-x-24">
             <Button 
-              title={"Skip"} 
+              title={"Skip"}
               onClick={onClickSkip}
             />
             {handleNextButton()}
           </div>
-          
 
       </div>
     </div>

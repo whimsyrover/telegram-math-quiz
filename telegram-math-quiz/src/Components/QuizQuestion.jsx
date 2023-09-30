@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function QuizQuestion({ question, options = [], correctAnswerIndex, onSelectAnswer = () => {} }) {
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
     const isAnswerCorrect = selectedAnswerIndex === correctAnswerIndex;
+
+    useEffect(() => {
+        setSelectedAnswerIndex(null);
+    }, [question]);
 
     const handleAnswerClick = (index) => {
         setSelectedAnswerIndex(index);
@@ -36,10 +40,10 @@ function QuizQuestion({ question, options = [], correctAnswerIndex, onSelectAnsw
 
         {selectedAnswerIndex !== null && (
             <p class="text-sm text-sky-900">
-            {isAnswerCorrect 
-            ? 'Correct! 🎉' 
-            : 'Incorrect 🙅‍♀️'
-            } The correct answer is {options[correctAnswerIndex]}.
+            { isAnswerCorrect 
+              ? 'Correct! 🎉' 
+              : `Incorrect 🙅‍♀️ The correct answer is ${options[correctAnswerIndex]}.`
+            }
             </p>
         )}
 
