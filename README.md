@@ -63,3 +63,5 @@ By this point you must be able to access the Mini App by its URL, something like
 This is where the implementations starts. Telegram currently supports six different ways of launching Mini Apps: from a keyboard button, from an inline button, from the bot menu button, via inline mode, from a direct link – and even from the attachment menu.  
 <img width=500 src="documentation/img/implementing_mini_app.jpeg">  
 Follow the [documentation](https://core.telegram.org/bots/webapps#implementing-mini-apps) to set it up.
+
+Kuddos to [TheCymond](https://github.com/TheCymond/Telegram_Web_App)

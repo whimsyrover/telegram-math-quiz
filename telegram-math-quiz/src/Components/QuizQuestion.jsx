@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 
-function QuizQuestion({ question, options = [], correctAnswerIndex }) {
+function QuizQuestion({ question, options = [], correctAnswerIndex, onSelectAnswer = () => {} }) {
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
     const isAnswerCorrect = selectedAnswerIndex === correctAnswerIndex;
 
     const handleAnswerClick = (index) => {
         setSelectedAnswerIndex(index);
+        onSelectAnswer()
     };
 
     return (
         <div class="space-y-4 justify-center">
-        <p class="text-xl">{question}</p>
+        <p class="text-base">{question}</p>
         
         <ul class="space-y-2">
             {options.map((option, index) => (
@@ -27,7 +28,6 @@ function QuizQuestion({ question, options = [], correctAnswerIndex }) {
                       : 'initial',
                     cursor: 'pointer',
                   }}
-                class="flex items-center"  
             >
                 {option}
             </li>
@@ -36,7 +36,10 @@ function QuizQuestion({ question, options = [], correctAnswerIndex }) {
 
         {selectedAnswerIndex !== null && (
             <p class="text-sm text-sky-900">
-            {isAnswerCorrect ? 'Correct! 🎉' : 'Incorrect 🙅‍♀️'} The correct answer is {options[correctAnswerIndex]}.
+            {isAnswerCorrect 
+            ? 'Correct! 🎉' 
+            : 'Incorrect 🙅‍♀️'
+            } The correct answer is {options[correctAnswerIndex]}.
             </p>
         )}
 
