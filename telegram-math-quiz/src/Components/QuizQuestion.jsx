@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function QuizQuestion({ question, options = [], correctAnswerIndex, onSelectAnswer = () => {} }) {
+function QuizQuestion({ question, options = [], correctAnswerIndex, onSelectAnswer }) {
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
     const isAnswerCorrect = selectedAnswerIndex === correctAnswerIndex;
 
@@ -10,7 +10,7 @@ function QuizQuestion({ question, options = [], correctAnswerIndex, onSelectAnsw
 
     const handleAnswerClick = (index) => {
         setSelectedAnswerIndex(index);
-        onSelectAnswer()
+        onSelectAnswer(index === correctAnswerIndex)
     };
 
     return (

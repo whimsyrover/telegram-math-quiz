@@ -13,21 +13,33 @@ class QuizForm {
     }
 }
 
-class QuizScore {
+export class QuizScore {
+    constructor(quizLength) {
+        this.quizLength = quizLength
+        this.correctAnswers = 0
+        this.skippedQuestions = 0
+    }
 
+    onSkipQuestion() {
+        this.skippedQuestions += 1
+    }
+
+    onCorrectAnswers() {
+        this.correctAnswers += 1
+    }
 }
 
-class QuizController {
+export class QuizController {
     constructor() {
         this.quizzes = [];
         this.setupQuizzes()
         
-        this.currentQuizz = this.quizzes[this.setRandomQuiz()]
+        this.currentQuiz = this.quizzes[this.setRandomQuiz()]
         this.currentQuestionIndex = 0
     }
 
     getCurrentQuestion() {
-        return this.currentQuizz.questions[this.currentQuestionIndex]
+        return this.currentQuiz.questions[this.currentQuestionIndex]
     }
 
     addQuiz(quiz) {
@@ -40,12 +52,12 @@ class QuizController {
                 new Question("How much is 5% of 200?", ["10", "5", "2.5"], 0),
                 new Question("Is it 1/4 equivalent to 25%?", ["true", "false"], 0),
                 new Question("Is it 0.1 equivalent to 10%?", ["true", "false"], 0),
-                new Question("Is it 0.01 equivalent to 1%?", ["true", "false"], 0),
-                new Question("How much is 1% of 100?", ["10", "1", "0.1"], 1),
-                new Question("How much is 100 * 0.01 ?", ["10", "1", "0.1"], 1),
-                new Question("How much is 25% of 100?", ["25", "4"], 0),
-                new Question("How much is 25% of 300?", ["50", "75", "100"], 1),
-                new Question("How much is 300 * 0.25?", ["50", "75", "100"], 1),
+                // new Question("Is it 0.01 equivalent to 1%?", ["true", "false"], 0),
+                // new Question("How much is 1% of 100?", ["10", "1", "0.1"], 1),
+                // new Question("How much is 100 * 0.01 ?", ["10", "1", "0.1"], 1),
+                // new Question("How much is 25% of 100?", ["25", "4"], 0),
+                // new Question("How much is 25% of 300?", ["50", "75", "100"], 1),
+                // new Question("How much is 300 * 0.25?", ["50", "75", "100"], 1),
             ])
         )
 
@@ -67,17 +79,11 @@ class QuizController {
 
     nextQuestion() {
         const nextIndex = this.currentQuestionIndex + 1
-        if (nextIndex == this.currentQuizz.length) {
+        if (nextIndex === this.currentQuiz.length) {
             return null
         } else {
             this.currentQuestionIndex += 1
-            this.currentQuestion = this.currentQuizz.questions[nextIndex]
+            this.currentQuestion = this.currentQuiz.questions[nextIndex]
         }
     }
-
-    onSkipQuestion() {
-
-    }
 }
-
-export default QuizController;
