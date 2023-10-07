@@ -14,7 +14,7 @@ function ScoreView({ score }) {
     }
 
     return (
-        <div class="space-y-4 justify-center">
+        <div class="flex flex-col border-2 border-slate-200 rounded-lg p-6">
             <p>{`📝 Your scored ${percentage}!`}</p>
             <p>{`Meaning ${correctAnswers} correct of ${validQuestions} answered questions`}</p>
         </div>

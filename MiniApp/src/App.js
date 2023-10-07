@@ -6,10 +6,11 @@ import ScoreView from "./Components/ScoreView.jsx";
 
 const controller = new QuizController()
 const score = new QuizScore(controller.currentQuiz.length)
+const miniApp = window.Telegram.WebApp
+const token = process.env.TOKEN
+const app_url = process.env.MINI_APP_URL
 
 function App() {
-  const tele = window.Telegram.WebApp;
-
   // --- Quiz Controller ---
   const quizLenght = controller.currentQuiz.length
   const [quizIndex, setQuizIndex] = useState(1)
@@ -17,9 +18,11 @@ function App() {
   const [isNextAvailable, setIsNextAvailable] = useState(false)
   const [isPresentingResults, setIsPresentingResults] = useState(false)
 
+  const userName = miniApp.initDataUnsafe?.user?.first_name || "Friend"
+  
   // --- Side Effects ---
   useEffect(() => {
-    tele.ready();
+    miniApp.ready();
   });
 
   useEffect(() => {
@@ -72,7 +75,15 @@ function App() {
 
   const handleMainScreen = () => {
     if (isPresentingResults) {
-      return <ScoreView score={score}/>
+      return <div class="flex flex-col space-y-8">
+      <ScoreView score={score}/>
+      <div class="flex bg-indigo-500/30 p-2 rounded-lg grid justify-items-center">
+        <a class="text-sm" href="javascript:Telegram.WebApp.openLink('https://github.com/MaisaMilena/telegram-math-quiz');">
+          Check this Mini App on GitHub 👩‍💻
+        </a>
+      </div>
+      </div>
+      
     } else {
       return <div class="space-y-8">
         <QuizQuestion
@@ -100,8 +111,8 @@ function App() {
       <div id="quiz-container" class="mx-auto px-6 space-y-8 justify-center items-center">
 
           <div class="flex flex-col">
-            <h2 class="text-center text-lg font-semibold leading-8 text-gray-900">Let's play with</h2>
-            <h2 class="text-center text-lg font-semibold leading-8 text-gray-900">✨ Math ✨</h2>
+            <h2 class="text-center text-lg font-semibold leading-8 text-gray-900">{`${userName}, let's`}</h2>
+            <h2 class="text-center text-lg font-semibold leading-8 text-gray-900">✨ play with Math ✨</h2>
           </div>
 
           <p>{quizIndex}/{quizLenght}</p>

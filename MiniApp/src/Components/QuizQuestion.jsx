@@ -17,7 +17,7 @@ function QuizQuestion({ question, options = [], correctAnswerIndex, onSelectAnsw
         <div class="space-y-4 justify-center">
         <p class="text-base">{question}</p>
         
-        <ul class="space-y-2">
+        <ul id="questions-list" class="space-y-5">
             {options.map((option, index) => (
             <li
                 key={index}

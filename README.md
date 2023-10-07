@@ -6,20 +6,24 @@ To locally setup a Mini App on Telegram you will need:
 2. A **localhost exposer** to allow Telegram access your localhost
 3. A **Telegram bot** running on your machine
 
-# Creating a Test Env
-1. iOS: tap 10 times on the Settings icon > Accounts > Login to another account > Test.
-2. After creating the account, on the macOS: click the Settings icon 5 times to open the Debug Menu, ⌘ + click ‘Add Account’ and log in using the Test.
+`BotFather` useful commands:
+- `/help`
+- `/editapp`
+- `/setmenubutton`: sets the button on the chat. This feature allows access to **more features**, such as basic user information (as I use here the name).  
+According to the [documentation](https://core.telegram.org/bots/webapps#inline-button-mini-apps):
+- Fully-fledged web services and integrations of any kind.
+- The use cases are effectively unlimited.
 
-# To setup Mini Apps
-GREAT example of mini app: https://github.com/revenkroz/telegram-web-app-bot-example
+> This is Mini Apps is lauched from the Menu Button (bot menu button)
+![Alt text](documentation/img/implementing_mini_app.jpeg)
 
-# To debug Mini Apps
-### Install the Telegram Beta Version (macOS)
+# Create a Telegram test env
+## Install the Telegram Beta Version (macOS)
 1. Download and launch the Beta Version of Telegram macOS.
 2. Quickly click 5 times on the Settings icon to open the debug menu and enable “Debug Mini Apps”.
 Reference: https://core.telegram.org/bots/webapps#debug-mode-for-mini-apps
 
-### Create a Telegram test account
+## Create a Test Account
 A **test account** allows access to the test envirorment of Telegram. It is completely separate from the main environment where you have you real account. You will need to create a new user account:
 ```
 - iOS: tap 10 times on the Settings icon > Accounts > Login to another account > Test.
@@ -28,33 +32,45 @@ A **test account** allows access to the test envirorment of Telegram. It is comp
 ```
 Reference: https://core.telegram.org/bots/webapps#using-bots-in-the-test-environment
 
-### Create a Telegram Mini App
-Talk to `BotFather` and type `/help`. A list of commands will appear. Follow the instructions of `/newapp` to create a new app:
+# Create a Telegram Bot (backend)
+Talk to `BotFather`, type `/help`, and follow the instructions to create a new bot.  
+Check the [documentation](https://core.telegram.org/bots#how-do-i-create-a-bot)
+
+# Create a Telegram Mini App (frontend)
+Talk to `BotFather`, type `/help`, and follow the instructions to create a new Mini App (Web App).
+A list of commands will appear. Follow the instructions of `/newapp` to create a new app.
+
+`BotFather` will ask you: `Now please send me the Web App URL that will be opened when users follow a web app direct link.`  
+
+This URL must be a valid URL exposed on the internet. But you will start developing on your localhost, how to setup that?
+
+# Setup this Mini App locally
+The following steps will allow that you run this Mini App on your local server (localhost), and at the same time accessing it on the Telegram App (test environment)
+
+### 1. Clone the repo
 ```
-Web Apps
-/myapps - edit your web apps
-/newapp - create a new web app
-/listapps - get a list of your web apps
-/editapp - edit a web app
-/deleteapp - delete an existing web app
+git clone git@github.com:MaisaMilena/telegram-math-quiz.git
 ```
 
-`BotFather` will ask you: `Now please send me the Web App URL that will be opened when users follow a web app direct link.`
-This URL must be a valid URL exposed on the internet. But you will start developing on your localhost, how to setup that? Follow the above.
+### 2. Create a web server (open a new terminal - this will keep running): 
+```
+cd telegram-math-quiz/MiniApp
+npm start
+```
+This will setup the project, start the web server and open the web application in your browser on `http://localhost:3000/`  
 
-### Setup the Mini App locally
-The following steps will allow that you develop your Mini App on your local server (localhost), and at the same time accessing it on the Telegram App (test environment)
+### 3. Expose your localhost (open a new terminal - this will keep running)
+I suggest using [ngrok](https://ngrok.com/docs/getting-started/) to allow your localhost be accessible on the internet, a requirement to run Mini Apps locally.
+3.1 download ngrok
+3.2 connect your ngrok account
+3.3 then run:
+```
+ngrok http 3000
+```
+<img width=800 src="documentation/img/ngrok-running.png">
 
-1. Create a web server: 
-`python3 -m http.server`
-Response:
-`Serving HTTP on :: port 8000 (http://[::]:8000/) ...`
-
-2. Expose your localhost. I suggest using [ngrok](https://ngrok.com/docs/getting-started/) to allow your localhost be accessible on the internet, a requirement to run Mini Apps locally.
-
-3. Tell `BotFather` the ngrok URL to finish the Mini App creation.
-> Pay attention that every time you run the ngrok it will be a different URL and you will need to run `/editApp` to edit it.
-
+### 4. Tell `BotFather` the ngrok URL to finish the Mini App creation
+> Pay attention that every time you run the ngrok it will be a different URL and you will need to run `/editApp` and `/setmenubutton` to edit it.
 
 ### Implementing the Mini App
 By this point you must be able to access the Mini App by its URL, something like `t.me/yourbot_bot/app_name`. You will also notice that the chat with the App is completely empty.  
@@ -64,4 +80,7 @@ This is where the implementations starts. Telegram currently supports six differ
 <img width=500 src="documentation/img/implementing_mini_app.jpeg">  
 Follow the [documentation](https://core.telegram.org/bots/webapps#implementing-mini-apps) to set it up.
 
-Kuddos to [TheCymond](https://github.com/TheCymond/Telegram_Web_App)
+
+# Cool projects:
+- [TheCymond - Telegram Web App](https://github.com/TheCymond/Telegram_Web_App)
+- Example of [Mini App](https://github.com/revenkroz/telegram-web-app-bot-example) on a single HTML file
