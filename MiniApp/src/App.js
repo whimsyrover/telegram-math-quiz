@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import QuizQuestion from './Components/QuizQuestion.jsx';
 import Button from "./Components/Button.jsx";
 import { QuizController, QuizScore } from "./QuizController.js";
-import ScoreView from "./Components/ScoreView.jsx";
+import { ScoreView, getTextualScore } from "./Components/ScoreView.jsx";
 
 const controller = new QuizController()
 const score = new QuizScore(controller.currentQuiz.length)
 const miniApp = window.Telegram.WebApp
-const token = process.env.TOKEN
-const app_url = process.env.MINI_APP_URL
 
 function App() {
   // --- Quiz Controller ---
@@ -73,6 +71,11 @@ function App() {
     }
   }
 
+  const sendResultsToBot = () => {
+    let result = getTextualScore(score)
+    miniApp.sendData(result)
+  }
+
   const handleMainScreen = () => {
     if (isPresentingResults) {
       return <div class="flex flex-col space-y-8">
@@ -82,6 +85,10 @@ function App() {
           Check this Mini App on GitHub 👩‍💻
         </a>
       </div>
+      <Button 
+        title={"Save results to chat"}
+        onClick={sendResultsToBot}
+      />
       </div>
       
     } else {
