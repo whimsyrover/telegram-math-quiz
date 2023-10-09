@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { Agent } = require("node:https");
 const { Telegraf } = require('telegraf');
+const commands = require('./commands');
 
 const token = process.env.TOKEN
 const app_url = process.env.MINI_APP_URL
@@ -32,16 +33,24 @@ const start_msg = (ctx) => `
 Hello, ${get_name(ctx)}. Ready to practice your math skills? 📝
 `
 
-bot.start((ctx) =>
-    // sets Web App as the menu button for current chat
-    ctx.setChatMenuButton({
-        text: "Start",
-        type: "web_app",
-        web_app: { url: app_url },
-    })
-); 
+// bot.on("inline_query", ctx =>
+// 	ctx.answerInlineQuery([], {
+// 		button: { text: "Launch", web_app: { url: app_url } },
+// 	}),
+// );
 
-// Error
+bot.start((ctx) => {
+    console.log(">> Start called")
+    ctx.reply(start_msg(ctx))
+}); 
+
+commands(bot);
+
+bot.answerWebAppQuery((web_app_query_id, result) => {
+    console.log("🦋 result: ", result)
+})
+
+
 bot.catch(error => {
 	console.log(error)
 });
