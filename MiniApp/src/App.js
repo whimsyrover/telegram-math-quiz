@@ -87,10 +87,10 @@ function App() {
           Check this Mini App on GitHub 👩‍💻
         </a>
       </div>
-      <Button 
+      {/* <Button 
         title={"Save results to chat"}
         onClick={sendResultsToBot}
-      />
+      /> */}
       </div>
       
     } else {
@@ -137,7 +137,7 @@ function App() {
 function apiRequest(data, onCallback) {
   const authData = miniApp.initData || miniApp.initDataUnsafe || '';
   console.log("Authdata: ", authData)
-  const URL = `https://02f5-2804-14d-b084-8d98-a940-abce-713d-9acf.ngrok-free.app/sendMessage`
+  const URL = `${process.env.BACKEND_URL}/sendMessage`
   const body = JSON.stringify(Object.assign(data, {
       _auth: authData,
       method: "sendMessage",
