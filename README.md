@@ -1,6 +1,9 @@
 # Squizme
 Squeeze your brain with some math quizzes on Telegram App.
 
+`@squizme_bot`: a Mini App presenting a quiz about daily math use cases. The user interacts with a random quiz, the app presents a feedback answer, and in the end, presents the results.
+The user can also interact with the bot by typing `/curiosity` and the bot answers random math curiosity.
+
 ## TL;DR;
 To set up a Mini App on Telegram you will need:
 1. A **web server** serving your Mini App (Vercel, GitHub)
