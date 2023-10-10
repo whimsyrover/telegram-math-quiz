@@ -74,7 +74,8 @@ function App() {
 
   const sendResultsToBot = () => {
     let result = getTextualScore(score)
-    miniApp.sendData(result)
+    // miniApp.sendData(result)
+    apiRequest(result)
   }
 
   const handleMainScreen = () => {
@@ -130,6 +131,28 @@ function App() {
       </div>
     </div>
   );
+}
+
+function apiRequest(data, onCallback) {
+  const authData = miniApp.initData || miniApp.initDataUnsafe || '';
+  const URL = `https://02f5-2804-14d-b084-8d98-a940-abce-713d-9acf.ngrok-free.app/sendMessage`
+    fetch(URL, {
+        method: 'POST',
+        body: {
+          authData: authData,
+          message: data
+        },
+        // credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(function(response) {
+        return response.json();
+    }).then(function(result) {
+        onCallback && onCallback(result);
+    }).catch(function(error) {
+        onCallback && onCallback({error: 'Server error'});
+    });
 }
 
 export default App;
