@@ -1,3 +1,8 @@
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const fetch = require('node-fetch');
+
 require('dotenv').config();
 const { Agent } = require("node:https");
 const { Telegraf } = require('telegraf');
@@ -8,6 +13,31 @@ const app_url = process.env.MINI_APP_URL
 
 if (!token) throw new Error('"TOKEN" env var is required!');
 if (!app_url) throw new Error('"MINI_APP_URL" env var is required!');
+
+// -----  SERVER 
+app.use(express.json());
+app.use(cors({
+    origin: '*',
+    methods: 'POST, GET',
+    credentials: true
+}))
+
+// TODO: make it work to receive Mini App request and post the message on the chat
+app.post('/sendMessage', (req, res) => {
+    // try {
+        console.log("REQ: ", req)
+        console.log("REQ body: ", req.body)
+
+        // const message = 'Hello, bot!';
+        // const chatId = req.body.authData.query_id;
+
+        // Send the message to the Telegram Bot using the Telegram Bot API
+        // bot.telegram.sendMessage(chatId, message)
+    // } catch (error) {
+    //     console.error('Error:', error);
+    //     res.status(500).json({ success: false, message: 'Server error.' });
+    // }
+});
 
 // Use this line for development
 // const bot = new Telegraf(token, { 
@@ -20,7 +50,7 @@ if (!app_url) throw new Error('"MINI_APP_URL" env var is required!');
 // And this for production
 const bot = new Telegraf(token);
 
-// --- Start
+// --- BOT
 const get_name = (ctx) => {
     try {
       return ctx.update.message.from.first_name;
@@ -33,12 +63,6 @@ const start_msg = (ctx) => `
 Hello, ${get_name(ctx)}. Ready to practice your math skills? 📝
 `
 
-// bot.on("inline_query", ctx =>
-// 	ctx.answerInlineQuery([], {
-// 		button: { text: "Launch", web_app: { url: app_url } },
-// 	}),
-// );
-
 bot.start((ctx) => {
     console.log(">> Start called")
     ctx.reply(start_msg(ctx))
@@ -46,16 +70,17 @@ bot.start((ctx) => {
 
 commands(bot);
 
-bot.answerWebAppQuery((web_app_query_id, result) => {
-    console.log("🦋 result: ", result)
-})
-
-
 bot.catch(error => {
+    console.error("Bot caught error:")
 	console.log(error)
 });
 
-bot.launch();
+// Start the server
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+  bot.launch();
+});
 
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
