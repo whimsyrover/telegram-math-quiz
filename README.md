@@ -1,4 +1,5 @@
-# squizme
+# Squizme
+Squeeze your brain with some math quizzes 
 
 ## TL;DR;
 To locally setup a Mini App on Telegram you will need:
@@ -9,10 +10,7 @@ To locally setup a Mini App on Telegram you will need:
 `BotFather` useful commands:
 - `/help`
 - `/editapp`
-- `/setmenubutton`: sets the button on the chat. This feature allows access to **more features**, such as basic user information (as I use here the name).  
-According to the [documentation](https://core.telegram.org/bots/webapps#inline-button-mini-apps):
-- Fully-fledged web services and integrations of any kind.
-- The use cases are effectively unlimited.
+- `/setmenubutton`: sets the button on the chat. This feature allows access to **more features**, such as basic user information (as I use here the name).
 
 > This is Mini Apps is lauched from the Menu Button (bot menu button)
 ![Alt text](documentation/img/implementing_mini_app.jpeg)
@@ -35,6 +33,16 @@ Reference: https://core.telegram.org/bots/webapps#using-bots-in-the-test-environ
 # Create a Telegram Bot (backend)
 Talk to `BotFather`, type `/help`, and follow the instructions to create a new bot.  
 Check the [documentation](https://core.telegram.org/bots#how-do-i-create-a-bot)
+
+Use the `/setcommands` and type: `curiosity - Get a random curiosity about math`. You must tell the BotFather what commands are available. These commandas responses are handled in `/bot/commands.js`.
+
+To run it:
+```
+cd bot
+node index.js
+```
+
+> Note: it runs by default in port 3000. It cannot be the same port as the Mini App.
 
 # Create a Telegram Mini App (frontend)
 Talk to `BotFather`, type `/help`, and follow the instructions to create a new Mini App (Web App).
@@ -60,9 +68,9 @@ npm start
 This will setup the project, start the web server and open the web application in your browser on `http://localhost:3000/`  
 
 ### 3. Expose your localhost (open a new terminal - this will keep running)
-I suggest using [ngrok](https://ngrok.com/docs/getting-started/) to allow your localhost be accessible on the internet, a requirement to run Mini Apps locally.
-3.1 download ngrok
-3.2 connect your ngrok account
+I suggest using [ngrok](https://ngrok.com/docs/getting-started/) to allow your localhost be accessible on the internet, a requirement to run Mini Apps locally.  
+3.1 download ngrok  
+3.2 connect your ngrok account  
 3.3 then run:
 ```
 ngrok http 3000
@@ -71,15 +79,6 @@ ngrok http 3000
 
 ### 4. Tell `BotFather` the ngrok URL to finish the Mini App creation
 > Pay attention that every time you run the ngrok it will be a different URL and you will need to run `/editApp` and `/setmenubutton` to edit it.
-
-### Implementing the Mini App
-By this point you must be able to access the Mini App by its URL, something like `t.me/yourbot_bot/app_name`. You will also notice that the chat with the App is completely empty.  
-<img width=500 src="documentation/img/empty_mini_app.png">
-
-This is where the implementations starts. Telegram currently supports six different ways of launching Mini Apps: from a keyboard button, from an inline button, from the bot menu button, via inline mode, from a direct link – and even from the attachment menu.  
-<img width=500 src="documentation/img/implementing_mini_app.jpeg">  
-Follow the [documentation](https://core.telegram.org/bots/webapps#implementing-mini-apps) to set it up.
-
 
 # Cool projects:
 - [TheCymond - Telegram Web App](https://github.com/TheCymond/Telegram_Web_App)

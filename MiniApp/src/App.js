@@ -21,6 +21,7 @@ function App() {
   // --- Side Effects ---
   useEffect(() => {
     miniApp.ready();
+    miniApp.expand();
   });
 
   useEffect(() => {
