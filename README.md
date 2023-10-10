@@ -42,7 +42,9 @@ cd bot
 node index.js
 ```
 
-> Note: it runs by default in port 3000. It cannot be the same port as the Mini App.
+> Note: it runs by default in port 4000. It cannot be the same port as the Mini App.
+
+You may face several `FetchError: request to https://api.telegram.org/<token>/getMe failed, reason: Socket connection timeout` for test and production, but keep trying and eventually it will work.
 
 # Create a Telegram Mini App (frontend)
 Talk to `BotFather`, type `/help`, and follow the instructions to create a new Mini App (Web App).
